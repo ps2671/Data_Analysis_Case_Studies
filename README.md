@@ -2,7 +2,7 @@
 Added data analysis case studies
 
 # WIC_Hack
-Dog breed prediction web application based on python Flask and statistical model.
+Dog breed prediction web application based on python Flask and Random Forest Classifier.
 
 # Sentiment_Analysis
 Consist of two sentiment analysis projects for moview review analysis and db pedia dataset analysis using Naive Bayes Algorithm developed in Java.

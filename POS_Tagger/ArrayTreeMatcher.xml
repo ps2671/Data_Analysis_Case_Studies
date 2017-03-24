@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="E:\Ibrahim\github\group2\403\jbem\src\info\bem\ArrayTreeMatcher.java"><comment type="block">/*
+ * Copyright (c) 2014, alex-ac
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */</comment>
+<package>package <name><name>info</name><operator>.</operator><name>bem</name></name>;</package>
+
+<import>import <name><name>org</name><operator>.</operator><name>json</name><operator>.</operator><name>JSONArray</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>json</name><operator>.</operator><name>JSONObject</name></name>;</import>
+
+<class><specifier>public</specifier> class <name>ArrayTreeMatcher</name> <super><extends>extends <name>TreeMatcher</name></extends></super> <block>{
+  <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>int</name></type> <name>index_</name></decl>;</decl_stmt>
+  <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>TreeProcessor</name></type> <name>adapter_</name></decl>;</decl_stmt>
+
+  <constructor><specifier>public</specifier> <name>ArrayTreeMatcher</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>index</name></decl></parameter>)</parameter_list> <block>{
+    <expr_stmt><expr><name>index_</name> <operator>=</operator> <name>index</name></expr>;</expr_stmt>
+    <expr_stmt><expr><name>adapter_</name> <operator>=</operator> <operator>new</operator> <call><name>TreeProcessorAdapter</name><argument_list>(<argument><expr><name>this</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+  }</block></constructor>
+
+  <function><annotation>@<name>Override</name></annotation>
+  <specifier>public</specifier> <type><name>Object</name></type> <name>process</name><parameter_list>(<parameter><decl><type><name>JSONObject</name></type> <name>dictionary</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>BEMException</name></expr></argument></throws> <block>{
+    <throw>throw <expr><operator>new</operator> <call><name>BEMException</name><argument_list>(<argument><expr><literal type="string">"Array expected, but dictionary was given: "</literal> <operator>+</operator>
+                           <call><name><name>dictionary</name><operator>.</operator><name>toString</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</throw>
+  }</block></function>
+
+  <function><annotation>@<name>Override</name></annotation>
+  <specifier>public</specifier> <type><name>Object</name></type> <name>process</name><parameter_list>(<parameter><decl><type><name>JSONArray</name></type> <name>array</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>BEMException</name></expr></argument></throws> <block>{
+    <if>if <condition>(<expr><call><name><name>array</name><operator>.</operator><name>length</name></name><argument_list>()</argument_list></call> <operator>&lt;=</operator> <name>index_</name></expr>)</condition><then> <block>{
+      <throw>throw <expr><operator>new</operator> <call><name>BEMException</name><argument_list>(<argument><expr><literal type="string">"Array: "</literal> <operator>+</operator> <call><name><name>array</name><operator>.</operator><name>toString</name></name><argument_list>()</argument_list></call> <operator>+</operator>
+                             <literal type="string">" has no item with index: "</literal> <operator>+</operator>
+                             <call><name><name>Integer</name><operator>.</operator><name>toString</name></name><argument_list>(<argument><expr><name>index_</name></expr></argument>)</argument_list></call></expr></argument>)</argument_list></call></expr>;</throw>
+    }</block></then></if>
+    <return>return <expr><call><name><name>array</name><operator>.</operator><name>get</name></name><argument_list>(<argument><expr><name>index_</name></expr></argument>)</argument_list></call></expr>;</return>
+  }</block></function>
+
+  <function><annotation>@<name>Override</name></annotation>
+  <specifier>public</specifier> <type><name>Object</name></type> <name>process</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>string</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>BEMException</name></expr></argument></throws> <block>{
+    <throw>throw <expr><operator>new</operator> <call><name>BEMException</name><argument_list>(<argument><expr><literal type="string">"Array expected, but string was given: "</literal> <operator>+</operator> <name>string</name></expr></argument>)</argument_list></call></expr>;</throw>
+  }</block></function>
+
+  <function><annotation>@<name>Override</name></annotation>
+  <specifier>public</specifier> <type><name>Object</name></type> <name>process</name><parameter_list>(<parameter><decl><type><name>Number</name></type> <name>number</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>BEMException</name></expr></argument></throws> <block>{
+    <throw>throw <expr><operator>new</operator> <call><name>BEMException</name><argument_list>(<argument><expr><literal type="string">"Array expected, but number was given: "</literal> <operator>+</operator>
+                           <call><name><name>number</name><operator>.</operator><name>toString</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</throw>
+  }</block></function>
+
+  <function><annotation>@<name>Override</name></annotation>
+  <specifier>public</specifier> <type><name>Object</name></type> <name>process</name><parameter_list>(<parameter><decl><type><name>Boolean</name></type> <name>bool</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>BEMException</name></expr></argument></throws> <block>{
+    <throw>throw <expr><operator>new</operator> <call><name>BEMException</name><argument_list>(<argument><expr><literal type="string">"Array expected, but boolean was given: "</literal> <operator>+</operator>
+                           <call><name><name>bool</name><operator>.</operator><name>toString</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</throw>
+  }</block></function>
+
+  <function><annotation>@<name>Override</name></annotation>
+  <specifier>public</specifier> <type><name>Object</name></type> <name>process</name><parameter_list>(<parameter><decl><type><name>Object</name></type> <name>object</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>BEMException</name></expr></argument></throws> <block>{
+    <if>if <condition>(<expr><name>object</name> <operator>==</operator> <name><name>JSONObject</name><operator>.</operator><name>NULL</name></name></expr>)</condition><then> <block>{
+      <throw>throw <expr><operator>new</operator> <call><name>BEMException</name><argument_list>(<argument><expr><literal type="string">"Array expected, but null was given."</literal></expr></argument>)</argument_list></call></expr>;</throw>
+    }</block></then></if>
+    <return>return <expr><call><name><name>adapter_</name><operator>.</operator><name>process</name></name><argument_list>(<argument><expr><name>object</name></expr></argument>)</argument_list></call></expr>;</return>
+  }</block></function>
+
+}</block></class>
+</unit>
